@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CatalogAPI.DAL": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
