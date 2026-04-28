@@ -31,7 +31,7 @@ namespace CatalogAPI.DAL.Storage.GetEventById
                 .FirstOrDefaultAsync(ct);
         }
 
-        public async Task<bool> IsEventByIdExist(Guid id, CancellationToken ct)
+        public async Task<bool> IsEventByIdExistAsync(Guid id, CancellationToken ct)
         {
             return await _context.Events.AnyAsync(e => e.Id == id, ct);
         }

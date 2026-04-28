@@ -4,7 +4,7 @@ namespace CatalogAPI.DAL.Storage.GetManifestById
 {
     public interface IGetManifestByIdStorage
     {
-        Task<bool> IsManifestByIdExist(Guid id, CancellationToken ct);
+        Task<bool> IsManifestByIdExistAsync(Guid id, CancellationToken ct);
         Task<SeatManifestDetailModel?> GetManifestByIdAsync(Guid id, CancellationToken ct);
     }
 }

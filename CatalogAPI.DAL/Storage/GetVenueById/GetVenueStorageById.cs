@@ -31,7 +31,7 @@ namespace CatalogAPI.DAL.Storage.GetVenue
                 .FirstOrDefaultAsync(ct);
         }
 
-        public async Task<bool> IsVenueByIdExist(Guid id, CancellationToken ct)
+        public async Task<bool> IsVenueByIdExistAsync(Guid id, CancellationToken ct)
         {
             return await _context.Venues.AnyAsync(v => v.Id == id, ct);
         }

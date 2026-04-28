@@ -39,7 +39,7 @@ namespace CatalogAPI.DAL.Storage.GetManifestById
                 .FirstOrDefaultAsync(ct);
         }
 
-        public async Task<bool> IsManifestByIdExist(Guid id, CancellationToken ct)
+        public async Task<bool> IsManifestByIdExistAsync(Guid id, CancellationToken ct)
         {
             return await _context.SeatManifests.AnyAsync(sm => sm.Id == id, ct);
         }

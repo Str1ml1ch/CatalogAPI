@@ -1,6 +1,6 @@
 ﻿using CatalogAPI.Core.Enums;
 using CatalogAPI.Core.Models;
-using CatalogAPI.DAL.Storage.Filters;
+using CatalogAPI.DAL.Specifications.Events;
 using Homework.Ticketing.System.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,11 +25,15 @@ namespace CatalogAPI.DAL.Storage.GetEvents
             DateTimeOffset? toDate,
             CancellationToken ct)
         {
-            var query = _context.Events
-                .FilterByManifestId(manifestId)
-                .FilterByName(searchName)
-                .FilterByStatus(status)
-                .FilterByDateRange(fromDate, toDate);
+            var query = _context.Events.AsQueryable();
+            if (manifestId.HasValue)
+                query = query.Where(new EventByManifestIdSpecification(manifestId.Value).ToExpression());
+            if (!string.IsNullOrWhiteSpace(searchName))
+                query = query.Where(new EventByNameSpecification(searchName).ToExpression());
+            if (status.HasValue)
+                query = query.Where(new EventByStatusSpecification(status.Value).ToExpression());
+            if (fromDate.HasValue || toDate.HasValue)
+                query = query.Where(new EventByDateRangeSpecification(fromDate, toDate).ToExpression());
 
             var totalCount = await query.CountAsync(ct);
 

@@ -1,5 +1,5 @@
 ﻿using CatalogAPI.Core.Models;
-using CatalogAPI.DAL.Storage.Filters;
+using CatalogAPI.DAL.Specifications.Seats;
 using Homework.Ticketing.System.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,8 +22,9 @@ namespace CatalogAPI.DAL.Storage.GetSeats
             CancellationToken ct)
         {
             var query = _context.Seats
-                .FilterByManifestId(manifestId)
-                .FilterBySectionId(sectionId);
+                .Where(new SeatByManifestIdSpecification(manifestId).ToExpression());
+            if (sectionId.HasValue)
+                query = query.Where(new SeatBySectionIdSpecification(sectionId.Value).ToExpression());
 
             var totalCount = await query.CountAsync(ct);
 

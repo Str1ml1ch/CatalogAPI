@@ -22,6 +22,20 @@ dotnet_hide_advanced_members = false
 dotnet_member_insertion_location = with_other_members_of_the_same_kind
 dotnet_property_generation_behavior = prefer_throwing_properties
 
+# Define the naming style (must end with Async)
+dotnet_naming_style.end_with_async.capitalization = pascal_case
+dotnet_naming_style.end_with_async.required_suffix = Async
+
+# Define the rule linking the symbol group to the naming style
+dotnet_naming_rule.async_methods_end_with_async.symbols = async_methods
+dotnet_naming_rule.async_methods_end_with_async.style = end_with_async
+dotnet_naming_rule.async_methods_end_with_async.severity = warning
+
+# Define the symbol group for async methods
+dotnet_naming_symbols.async_methods.applicable_kinds = method
+dotnet_naming_symbols.async_methods.applicable_accessibilities = *
+dotnet_naming_symbols.async_methods.required_modifiers = async
+
 # Symbol search
 dotnet_search_reference_assemblies = true
 

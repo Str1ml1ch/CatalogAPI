@@ -1,5 +1,5 @@
 ﻿using CatalogAPI.Core.Models;
-using CatalogAPI.DAL.Storage.Filters;
+using CatalogAPI.DAL.Specifications.Venues;
 using Homework.Ticketing.System.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,10 +22,13 @@ namespace CatalogAPI.DAL.Storage.GetVenues
             string? country,
             CancellationToken ct)
         {
-            var query = _context.Venues
-                .FilterByName(searchName)
-                .FilterByCity(city)
-                .FilterByCountry(country);
+            var query = _context.Venues.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(searchName))
+                query = query.Where(new VenueByNameSpecification(searchName).ToExpression());
+            if (!string.IsNullOrWhiteSpace(city))
+                query = query.Where(new VenueByCitySpecification(city).ToExpression());
+            if (!string.IsNullOrWhiteSpace(country))
+                query = query.Where(new VenueByCountrySpecification(country).ToExpression());
 
             var totalCount = await query.CountAsync(ct);
 
