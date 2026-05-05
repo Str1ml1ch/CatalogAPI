@@ -1,4 +1,5 @@
-﻿using CatalogAPI.DAL.Entities;
+using CatalogAPI.Domain.Storage;
+using CatalogAPI.DAL.Entities;
 
 namespace CatalogAPI.DAL.Storage
 {

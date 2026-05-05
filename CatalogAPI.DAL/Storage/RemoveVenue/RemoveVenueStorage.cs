@@ -1,4 +1,5 @@
-﻿
+using CatalogAPI.Domain.Storage.RemoveVenue;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace CatalogAPI.DAL.Storage.RemoveVenue

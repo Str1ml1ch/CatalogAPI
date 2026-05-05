@@ -1,4 +1,5 @@
-﻿using CatalogAPI.Core.Enums;
+using CatalogAPI.Domain.Storage.UpdateEvent;
+using CatalogAPI.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace CatalogAPI.DAL.Storage.UpdateEvent

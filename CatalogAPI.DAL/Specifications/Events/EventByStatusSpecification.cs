@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using CatalogAPI.Core.Enums;
+using CatalogAPI.Domain.Enums;
 using CatalogAPI.DAL.Entities;
 
 namespace CatalogAPI.DAL.Specifications.Events

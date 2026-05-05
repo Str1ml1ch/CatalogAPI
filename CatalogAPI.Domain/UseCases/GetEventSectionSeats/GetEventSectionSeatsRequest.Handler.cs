@@ -1,9 +1,9 @@
-using CatalogAPI.Core.Enums;
-using CatalogAPI.Core.Models;
-using CatalogAPI.DAL.Storage.GetEventById;
-using CatalogAPI.DAL.Storage.GetEventSectionSeats;
-using CatalogAPI.DAL.Storage.GetManifestById;
-using CatalogAPI.DAL.Storage.GetSectionById;
+using CatalogAPI.Domain.Enums;
+using CatalogAPI.Domain.Models;
+using CatalogAPI.Domain.Storage.GetEventById;
+using CatalogAPI.Domain.Storage.GetEventSectionSeats;
+using CatalogAPI.Domain.Storage.GetManifestById;
+using CatalogAPI.Domain.Storage.GetSectionById;
 using CatalogAPI.Domain.Exceptions;
 using CatalogAPI.Domain.Services;
 using Homework.Ticketing.System.Shared.Models;

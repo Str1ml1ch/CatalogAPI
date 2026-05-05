@@ -1,3 +1,4 @@
+using CatalogAPI.Domain.Storage.RemoveManifest;
 using Microsoft.EntityFrameworkCore;
 
 namespace CatalogAPI.DAL.Storage.RemoveManifest

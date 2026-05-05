@@ -1,3 +1,4 @@
+using CatalogAPI.Domain.Storage.RemoveSeat;
 using Microsoft.EntityFrameworkCore;
 
 namespace CatalogAPI.DAL.Storage.RemoveSeat

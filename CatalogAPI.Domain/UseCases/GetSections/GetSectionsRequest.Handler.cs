@@ -1,6 +1,6 @@
-using CatalogAPI.Core.Models;
-using CatalogAPI.DAL.Storage.GetSections;
-using CatalogAPI.DAL.Storage.GetVenue;
+using CatalogAPI.Domain.Models;
+using CatalogAPI.Domain.Storage.GetSections;
+using CatalogAPI.Domain.Storage.GetVenue;
 using CatalogAPI.Domain.Exceptions;
 using Homework.Ticketing.System.Shared.Models;
 using MediatR;

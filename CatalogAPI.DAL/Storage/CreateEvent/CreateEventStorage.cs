@@ -1,5 +1,6 @@
-﻿using CatalogAPI.DAL.Entities;
-using CatalogAPI.Core.Enums;
+using CatalogAPI.Domain.Storage.CreateEvent;
+using CatalogAPI.DAL.Entities;
+using CatalogAPI.Domain.Enums;
 
 namespace CatalogAPI.DAL.Storage.CreateEvent
 {

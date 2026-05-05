@@ -1,4 +1,5 @@
-﻿using CatalogAPI.Core.Models;
+using CatalogAPI.Domain.Storage.GetEventById;
+using CatalogAPI.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CatalogAPI.DAL.Storage.GetEventById

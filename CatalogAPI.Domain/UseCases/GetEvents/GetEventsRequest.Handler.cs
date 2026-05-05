@@ -1,5 +1,5 @@
-﻿using CatalogAPI.Core.Models;
-using CatalogAPI.DAL.Storage.GetEvents;
+using CatalogAPI.Domain.Models;
+using CatalogAPI.Domain.Storage.GetEvents;
 using Homework.Ticketing.System.Shared.Models;
 using MediatR;
 

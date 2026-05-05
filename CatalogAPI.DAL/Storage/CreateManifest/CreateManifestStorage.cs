@@ -1,4 +1,5 @@
-﻿using CatalogAPI.DAL.Entities;
+using CatalogAPI.Domain.Storage.CreateManifest;
+using CatalogAPI.DAL.Entities;
 
 namespace CatalogAPI.DAL.Storage.CreateManifest
 {

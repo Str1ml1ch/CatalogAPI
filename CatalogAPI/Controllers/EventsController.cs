@@ -1,4 +1,4 @@
-﻿using CatalogAPI.Core.Enums;
+using CatalogAPI.Domain.Enums;
 using CatalogAPI.Domain.UseCases.GetEventSectionSeats;
 using CatalogAPI.Domain.UseCases.GetEvents;
 using MediatR;

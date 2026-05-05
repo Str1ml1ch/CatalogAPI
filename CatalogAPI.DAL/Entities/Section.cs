@@ -1,4 +1,4 @@
-﻿using CatalogAPI.Core.Enums;
+using CatalogAPI.Domain.Enums;
 using Homework.Ticketing.System.Shared.Enums;
 using Shared.DAL.Entities;
 

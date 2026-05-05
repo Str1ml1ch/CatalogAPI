@@ -1,4 +1,5 @@
-using CatalogAPI.Core.Models;
+using CatalogAPI.Domain.Storage.GetSections;
+using CatalogAPI.Domain.Models;
 using Homework.Ticketing.System.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 

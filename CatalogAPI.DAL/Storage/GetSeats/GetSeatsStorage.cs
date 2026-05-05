@@ -1,4 +1,5 @@
-﻿using CatalogAPI.Core.Models;
+using CatalogAPI.Domain.Storage.GetSeats;
+using CatalogAPI.Domain.Models;
 using CatalogAPI.DAL.Specifications.Seats;
 using Homework.Ticketing.System.Shared.Models;
 using Microsoft.EntityFrameworkCore;

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+using CatalogAPI.Domain.Storage.UpdateManifest;
+using Microsoft.EntityFrameworkCore;
 
 namespace CatalogAPI.DAL.Storage.UpdateManifest
 {

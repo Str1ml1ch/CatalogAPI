@@ -1,5 +1,5 @@
-﻿using CatalogAPI.Core.Enums;
-using CatalogAPI.Core.Models;
+using CatalogAPI.Domain.Enums;
+using CatalogAPI.Domain.Models;
 using Homework.Ticketing.System.Shared.Models;
 using MediatR;
 

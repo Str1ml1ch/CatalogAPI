@@ -1,3 +1,4 @@
+using CatalogAPI.Domain.Storage.UpdateVenue;
 using Microsoft.EntityFrameworkCore;
 
 namespace CatalogAPI.DAL.Storage.UpdateVenue

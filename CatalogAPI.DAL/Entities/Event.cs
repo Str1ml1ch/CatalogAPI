@@ -1,4 +1,4 @@
-﻿using CatalogAPI.Core.Enums;
+using CatalogAPI.Domain.Enums;
 using Shared.DAL.Entities;
 
 namespace CatalogAPI.DAL.Entities

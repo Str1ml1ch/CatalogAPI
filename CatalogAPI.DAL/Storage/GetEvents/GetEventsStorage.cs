@@ -1,5 +1,6 @@
-﻿using CatalogAPI.Core.Enums;
-using CatalogAPI.Core.Models;
+using CatalogAPI.Domain.Storage.GetEvents;
+using CatalogAPI.Domain.Enums;
+using CatalogAPI.Domain.Models;
 using CatalogAPI.DAL.Specifications.Events;
 using Homework.Ticketing.System.Shared.Models;
 using Microsoft.EntityFrameworkCore;
