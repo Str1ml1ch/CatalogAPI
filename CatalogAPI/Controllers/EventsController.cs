@@ -1,6 +1,7 @@
 using CatalogAPI.Domain.Enums;
 using CatalogAPI.Domain.UseCases.GetEventSectionSeats;
 using CatalogAPI.Domain.UseCases.GetEvents;
+using CatalogAPI.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace CatalogAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ServiceFilter<EventCacheETagFilter>]
     public class EventsController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -18,6 +20,7 @@ namespace CatalogAPI.Controllers
         }
 
         [HttpGet]
+        [ResponseCache(Duration = 60, VaryByQueryKeys = ["page", "pageSize", "manifestId", "searchName", "status", "fromDate", "toDate"])]
         public async Task<IActionResult> Get([FromQuery] int page = 1, 
             [FromQuery] int pageSize = 10, 
             [FromQuery] Guid? manifestId = null,
@@ -42,6 +45,7 @@ namespace CatalogAPI.Controllers
         }
 
         [HttpGet("{event_id}/sections/{section_id}/seats")]
+        [ResponseCache(Duration = 30, VaryByQueryKeys = ["page", "pageSize"])]
         public async Task<IActionResult> GetSeats(
             Guid event_id,
             Guid section_id,

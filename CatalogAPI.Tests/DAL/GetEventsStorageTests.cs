@@ -1,34 +1,56 @@
-using CatalogAPI.Domain.Enums;
 using CatalogAPI.DAL;
 using CatalogAPI.DAL.Entities;
 using CatalogAPI.DAL.Storage.GetEvents;
+using CatalogAPI.Domain.Enums;
 using CatalogAPI.Domain.Storage.GetEvents;
+using CatalogAPI.Tests.DAL.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CatalogAPI.Tests.DAL;
 
-public class GetEventsStorageTests : IDisposable
+[Collection("SqlServer")]
+public class GetEventsStorageTests : IAsyncLifetime
 {
-    private readonly CatalogDbContext _context;
-    private readonly GetEventsStorage _sut;
+    private readonly SqlServerContainerFixture _fixture;
+    private CatalogDbContext _context = null!;
+    private IDbContextTransaction _transaction = null!;
+    private GetEventsStorage _sut = null!;
 
-    public GetEventsStorageTests()
+    public GetEventsStorageTests(SqlServerContainerFixture fixture) => _fixture = fixture;
+
+    public async Task InitializeAsync()
     {
-        var options = new DbContextOptionsBuilder<CatalogDbContext>()
-            .UseInMemoryDatabase(Guid.NewGuid().ToString())
-            .Options;
-        _context = new CatalogDbContext(options);
+        _context = new CatalogDbContext(
+            new DbContextOptionsBuilder<CatalogDbContext>()
+                .UseSqlServer(_fixture.ConnectionString)
+                .Options);
+        _transaction = await _context.Database.BeginTransactionAsync();
         _sut = new GetEventsStorage(_context);
     }
 
-    public void Dispose() => _context.Dispose();
+    public async Task DisposeAsync()
+    {
+        await _transaction.RollbackAsync();
+        await _context.DisposeAsync();
+    }
+
+    private Guid SeedManifest()
+    {
+        var venue = new Venue { Id = Guid.NewGuid(), Name = "Test Venue", CreatedAt = DateTimeOffset.UtcNow };
+        _context.Venues.Add(venue);
+        var manifest = new SeatManifest { Id = Guid.NewGuid(), VenueId = venue.Id, Name = "Manifest", Capacity = 100, CreatedAt = DateTimeOffset.UtcNow };
+        _context.SeatManifests.Add(manifest);
+        _context.SaveChanges();
+        return manifest.Id;
+    }
 
     private Event CreateEvent(string name, EEventStatus status = EEventStatus.Published,
         DateTimeOffset? startDate = null, DateTimeOffset? endDate = null, Guid? manifestId = null)
         => new()
         {
             Id = Guid.NewGuid(),
-            ManifestId = manifestId ?? Guid.NewGuid(),
+            ManifestId = manifestId ?? SeedManifest(),
             Name = name,
             StartDate = startDate ?? DateTimeOffset.UtcNow,
             EndDate = endDate ?? DateTimeOffset.UtcNow.AddDays(1),
@@ -53,7 +75,7 @@ public class GetEventsStorageTests : IDisposable
     [Fact]
     public async Task GetAsync_FiltersByManifestId()
     {
-        var targetManifestId = Guid.NewGuid();
+        var targetManifestId = SeedManifest();
         _context.Events.AddRange(
             CreateEvent("Matching", manifestId: targetManifestId),
             CreateEvent("Non-Matching"));

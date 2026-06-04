@@ -1,6 +1,7 @@
 using CatalogAPI.DAL;
 using CatalogAPI.Domain.Services;
 using CatalogAPI.Domain.UseCases.GetVenues;
+using CatalogAPI.Filters;
 using CatalogAPI.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -25,6 +26,17 @@ namespace CatalogAPI
 
             builder.Services.AddStorage(builder.Configuration.GetConnectionString("DefaultConnection")!)
                 .AddServices();
+
+            builder.Services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = builder.Configuration.GetConnectionString("Redis")
+                    ?? throw new InvalidOperationException("Redis connection string is missing.");
+                options.InstanceName = "CatalogAPI:";
+            });
+
+            builder.Services.AddResponseCaching();
+
+            builder.Services.AddScoped<EventCacheETagFilter>();
 
             builder.Services.AddHttpClient("OrderApi", client =>
             {
@@ -67,6 +79,8 @@ namespace CatalogAPI
             app.UseHttpsRedirection();
 
             app.UseMiddleware<ExceptionHandlerMiddleware>();
+
+            app.UseResponseCaching();
 
             app.UseAuthentication();
             app.UseAuthorization();

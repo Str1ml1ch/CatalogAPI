@@ -3,6 +3,7 @@ using CatalogAPI.Domain.Models;
 using CatalogAPI.Domain.Storage.GetEvents;
 using CatalogAPI.Domain.UseCases.GetEvents;
 using Homework.Ticketing.System.Shared.Models;
+using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 
 namespace CatalogAPI.Tests.UseCases;
@@ -10,11 +11,17 @@ namespace CatalogAPI.Tests.UseCases;
 public class GetEventsRequestHandlerTests
 {
     private readonly Mock<IGetEventsStorage> _storageMock = new();
+    private readonly Mock<IDistributedCache> _cacheMock = new();
     private readonly GetEventsRequestHandler _sut;
 
     public GetEventsRequestHandlerTests()
     {
-        _sut = new GetEventsRequestHandler(_storageMock.Object);
+        // By default, cache returns null (cache miss) so the handler falls through to storage
+        _cacheMock
+            .Setup(c => c.GetAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((byte[]?)null);
+
+        _sut = new GetEventsRequestHandler(_storageMock.Object, _cacheMock.Object);
     }
 
     [Fact]
@@ -45,7 +52,8 @@ public class GetEventsRequestHandlerTests
 
         var result = await _sut.Handle(request, default);
 
-        Assert.Same(expected, result);
+        Assert.Equal(expected.Count, result.Count);
+        Assert.Equal(expected.Data?.Count, result.Data?.Count);
         _storageMock.VerifyAll();
     }
 }

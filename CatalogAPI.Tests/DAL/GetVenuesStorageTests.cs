@@ -2,25 +2,38 @@ using CatalogAPI.DAL;
 using CatalogAPI.DAL.Entities;
 using CatalogAPI.DAL.Storage.GetVenues;
 using CatalogAPI.Domain.Storage.GetVenues;
+using CatalogAPI.Tests.DAL.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CatalogAPI.Tests.DAL;
 
-public class GetVenuesStorageTests : IDisposable
+[Collection("SqlServer")]
+public class GetVenuesStorageTests : IAsyncLifetime
 {
-    private readonly CatalogDbContext _context;
-    private readonly GetVenuesStorage _sut;
+    private readonly SqlServerContainerFixture _fixture;
+    private CatalogDbContext _context = null!;
+    private IDbContextTransaction _transaction = null!;
+    private GetVenuesStorage _sut = null!;
 
-    public GetVenuesStorageTests()
+    public GetVenuesStorageTests(SqlServerContainerFixture fixture) => _fixture = fixture;
+
+    public async Task InitializeAsync()
     {
-        var options = new DbContextOptionsBuilder<CatalogDbContext>()
-            .UseInMemoryDatabase(Guid.NewGuid().ToString())
-            .Options;
-        _context = new CatalogDbContext(options);
+        _context = new CatalogDbContext(
+            new DbContextOptionsBuilder<CatalogDbContext>()
+                .UseSqlServer(_fixture.ConnectionString)
+                .Options);
+        _transaction = await _context.Database.BeginTransactionAsync();
         _sut = new GetVenuesStorage(_context);
     }
 
-    public void Dispose() => _context.Dispose();
+    public async Task DisposeAsync()
+    {
+        await _transaction.RollbackAsync();
+        await _context.DisposeAsync();
+    }
+
 
     private Venue CreateVenue(string name, string? city = null, string? country = null)
         => new()
