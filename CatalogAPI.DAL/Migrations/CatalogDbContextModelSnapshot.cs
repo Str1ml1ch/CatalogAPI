@@ -71,7 +71,7 @@ namespace CatalogAPI.DAL.Migrations
 
                     b.HasIndex("Status");
 
-                    b.ToTable("Events");
+                    b.ToTable("Events", (string)null);
                 });
 
             modelBuilder.Entity("CatalogAPI.DAL.Entities.Seat", b =>
@@ -107,7 +107,7 @@ namespace CatalogAPI.DAL.Migrations
 
                     b.HasIndex("SectionId", "Row", "Number");
 
-                    b.ToTable("Seats");
+                    b.ToTable("Seats", (string)null);
                 });
 
             modelBuilder.Entity("CatalogAPI.DAL.Entities.SeatManifest", b =>
@@ -143,7 +143,7 @@ namespace CatalogAPI.DAL.Migrations
 
                     b.HasIndex("VenueId");
 
-                    b.ToTable("SeatManifests");
+                    b.ToTable("SeatManifests", (string)null);
                 });
 
             modelBuilder.Entity("CatalogAPI.DAL.Entities.Section", b =>
@@ -202,7 +202,7 @@ namespace CatalogAPI.DAL.Migrations
 
                     b.HasIndex("ManifestId", "SeatType");
 
-                    b.ToTable("Sections");
+                    b.ToTable("Sections", (string)null);
                 });
 
             modelBuilder.Entity("CatalogAPI.DAL.Entities.Venue", b =>
@@ -254,7 +254,7 @@ namespace CatalogAPI.DAL.Migrations
 
                     b.HasIndex("Country");
 
-                    b.ToTable("Venues");
+                    b.ToTable("Venues", (string)null);
                 });
 
             modelBuilder.Entity("CatalogAPI.DAL.Entities.Event", b =>
